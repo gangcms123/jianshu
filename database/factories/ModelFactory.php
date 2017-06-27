@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Model\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -28,6 +28,7 @@ $factory->define(App\Model\Post::class,function(Faker\Generator $faker){
     return [
         'title' => $faker->sentence(6),
         'content' => $faker->paragraph(10),
+        'user_id' => 1,
         'created_at' => $date_time,
         'updated_at' => $date_time,
     ];

@@ -1,5 +1,23 @@
 <?php
 
+Route::get('/',function (){
+    return 'This is a index';
+});
+//注册页面
+Route::get('/register','RegisterController@index')->name('register');
+Route::post('/register','RegisterController@register')->name('registerstore');
+
+//登录页面
+Route::get('/login','LoginController@index')->name('login');
+Route::post('/login','LoginController@login')->name('loginstore');
+
+//退出
+Route::get('/logout','LoginController@logout')->name('logout');
+
+//个人设置页面
+Route::get('/user/me/setting','UserController@setting')->name('setting');
+Route::post('/user/me/setting','UserController@settingstore')->name('settingstore');
+
 //文章列表页
 Route::get('/posts','PostController@index')->name('index');
 

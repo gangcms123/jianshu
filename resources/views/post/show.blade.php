@@ -4,17 +4,19 @@
             <div class="blog-post">
                 <div style="display:inline-flex">
                     <h2 class="blog-post-title">{{ $post->title }}</h2>
-                    @if($post->isShow == false)
-                    <a style="margin: auto"  href="{{route("edit",['id'=>$post->id])}}">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
-                    @endif
-                    <a style="margin: auto"  href="{{route("delete",['id'=>$post->id])}}">
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </a>
+                    @can('update',$post)
+                        <a style="margin: auto"  href="{{route("edit",['id'=>$post->id])}}">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                    @endcan
+                    @can('delete',$post)
+                        <a style="margin: auto"  href="{{route("delete",['id'=>$post->id])}}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </a>
+                    @endcan
                 </div>
 
-                <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a href="#">Kassandra Ankunding2</a></p>
+                <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a href="#">{{$post->user->name}}</a></p>
 
                 {!! $post->content !!}
                 <div>
