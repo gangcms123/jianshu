@@ -36,10 +36,11 @@ Route::put('/posts/{post}','PostController@update')->name('editsave');
 Route::get('/posts/{post}/delete','PostController@delete')->name('delete');
 
 //点赞
-Route::get('/posts/{post}/zan','PostController@delete')->name('zan');
+Route::get('/posts/{post}/zan','PostController@zan')->name('zan');
+Route::get('/posts/{post}/unzan','PostController@unzan')->name('unzan');
 
 //图片上传
-Route::post('/posts/image/upload','PostController@imageUpload')->name('zan');
+Route::post('/posts/image/upload','PostController@imageUpload')->name('imageUpload');
 
 //提交评论
 Route::post('/posts/{post}/comment','PostController@comment')->name('comment');
