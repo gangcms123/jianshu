@@ -40,3 +40,6 @@ Route::get('/posts/{post}/zan','PostController@delete')->name('zan');
 
 //图片上传
 Route::post('/posts/image/upload','PostController@imageUpload')->name('zan');
+
+//提交评论
+Route::post('/posts/{post}/comment','PostController@comment')->name('comment');

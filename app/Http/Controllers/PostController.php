@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Post;
 
+use Illuminate\Support\Facades\Auth;
+
 class PostController extends Controller
 {
     //文章列表
     public function index(){
-        $posts = Post::orderBy('created_at','desc')->paginate(6);
+        $posts = Post::orderBy('created_at','desc')->withCount('comments')->paginate(6);
         return view('post/index',compact('posts'));
     }
 
     //文章详情
     public function show(Post $post){
+        $post->load('comments.user');
         return view('post/show',compact('post'));
     }
 
@@ -29,7 +32,7 @@ class PostController extends Controller
             'title' => 'required|string|max:100|min:5',
             'content' => 'required|string|min:10',
         ]);
-        $user_id = \Auth::id();
+        $user_id = Auth::id();
         $data = array_merge(request(['title','content']),compact('user_id'));
         $post = Post::create($data);
         return redirect(route('index'));
@@ -64,5 +67,16 @@ class PostController extends Controller
     public function imageUpload(Request $request){
        $path = $request->file('wangEditorH5File')->storePublicly(md5(time()));
        return asset('storage/'.$path);
+    }
+
+    //提交评论
+    public function comment(Post $post){
+        $this->validate(request(),[
+            'content' => 'required|string|min:5',
+        ]);
+        $user_id = Auth::id();
+        $content = request('content');
+        $post->comments()->create(compact('user_id','content'));
+        return back();
     }
 }
