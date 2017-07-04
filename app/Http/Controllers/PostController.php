@@ -98,4 +98,14 @@ class PostController extends Controller
         $post->zan(Auth::id())->delete();
         return back();
     }
+
+    //搜索页面
+    public function search(Request $request){
+        $this->validate($request,[
+            'query' => 'required'
+        ]);
+        $query = $request->get('query');
+        $posts = Post::search($query)->paginate(2);
+        return view("post/search",compact('posts','query'));
+    }
 }

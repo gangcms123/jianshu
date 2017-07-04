@@ -18,6 +18,9 @@ Route::get('/logout','LoginController@logout')->name('logout');
 Route::get('/user/me/setting','UserController@setting')->name('setting');
 Route::post('/user/me/setting','UserController@settingstore')->name('settingstore');
 
+//搜索页面
+Route::get('/posts/search','PostController@search')->name('search');
+
 //文章列表页
 Route::get('/posts','PostController@index')->name('index');
 

@@ -1,9 +1,28 @@
 <?php
 
 namespace App\Model;
+use App\Model\Model;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
+    use Searchable;
+
+    //定义该模型索引的名字
+    public function searchableAs()
+    {
+        return 'post';
+    }
+
+    //设置该模型被搜索的字段
+    public function toSearchableArray()
+    {
+        return [
+            'title' => $this->title,
+            'content' => $this->content,
+        ];
+    }
+
     //一篇文章属于一个用户
     public function user()
     {
@@ -27,4 +46,6 @@ class Post extends Model
     {
         return $this->hasMany('App\Model\Zan');
     }
+
+
 }
