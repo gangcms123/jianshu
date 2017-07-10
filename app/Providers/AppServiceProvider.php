@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        View::composer('layout.sidebar',function ($view){
+            $topics = \App\Model\Topic::all();
+            $view->with('topics',$topics);
+        });
     }
 
     /**

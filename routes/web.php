@@ -48,3 +48,6 @@ Route::post('/posts/image/upload','PostController@imageUpload')->name('imageUplo
 
 //提交评论
 Route::post('/posts/{post}/comment','PostController@comment')->name('comment');
+//专题
+Route::get('/topic/{topic}','TopicController@show')->name('topic');
+Route::post('/topic/{topic}/submit','TopicController@submit')->name('submit');
