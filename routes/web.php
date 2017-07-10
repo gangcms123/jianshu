@@ -1,8 +1,6 @@
 <?php
 
-Route::get('/',function (){
-    return 'This is a index';
-});
+Route::get('/','PostController@index');
 //注册页面
 Route::get('/register','RegisterController@index')->name('register');
 Route::post('/register','RegisterController@register')->name('registerstore');
@@ -16,6 +14,9 @@ Route::get('/logout','LoginController@logout')->name('logout');
 
 //个人设置页面
 Route::get('/user/me/setting','UserController@setting')->name('setting');
+Route::get('/user/{user}','UserController@show')->name('myshow');
+Route::post('/user/{user}/fan','UserController@fan')->name('fan');
+Route::post('/user/{user}/unfan','UserController@unfan')->name('unfan');
 Route::post('/user/me/setting','UserController@settingstore')->name('settingstore');
 
 //搜索页面

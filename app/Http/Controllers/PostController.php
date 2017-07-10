@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Model\Post;
 use App\Model\Zan;
-
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
     //文章列表
     public function index(){
-        $posts = Post::orderBy('created_at','desc')->withCount(['comments','zans'])->paginate(6);
+        $posts = Post::with('user')->orderBy('created_at','desc')->withCount(['comments','zans'])->paginate(6);
         return view('post/index',compact('posts'));
     }
 
