@@ -6,5 +6,6 @@ use App\Model\Model;
 
 class AdminUser extends Authenticatable
 {
+    protected $guarded = ['id'];
     protected $rememberTokenName = '';
 }
