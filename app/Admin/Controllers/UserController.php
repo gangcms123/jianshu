@@ -32,4 +32,39 @@ class UserController extends Controller
 
         return redirect('/admin/users');
     }
+
+    //用户的角色页面
+    public function role(AdminUser $user)
+    {
+        $myroles = $user->roles;
+        $roles = \App\Model\AdminRole::all();
+        return view('admin.user.role',compact('myroles','roles','user'));
+    }
+
+    //添加用户的角色
+    public function storeRole(AdminUser $user)
+    {
+        $this->validate(request(),[
+            'roles.*' => 'required|integer',
+        ]);
+
+        $roles = \App\Model\AdminRole::findMany(request('roles'));
+        $myroles = $user->roles;
+
+        //要添加的角色
+        $addroles = $roles->diff($myroles);
+        foreach ($addroles as $role)
+        {
+            $user->assignRole($role);
+        }
+
+        //要删除的角色
+        $deleteroles = $myroles->diff($roles);
+        foreach ($deleteroles as $role)
+        {
+            $user->deleteRole($role);
+        }
+
+        return back();
+    }
 }
