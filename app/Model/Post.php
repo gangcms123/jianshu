@@ -3,11 +3,21 @@
 namespace App\Model;
 use App\Model\Model;
 use Laravel\Scout\Searchable;
-use PhpParser\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
     use Searchable;
+
+    //全局scope 没有被删除的文章
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('avaiable',function (Builder $builder){
+            $builder->whereIn('status',[0,1]);
+        });
+    }
 
     //定义该模型索引的名字
     public function searchableAs()
